@@ -1,0 +1,18 @@
+# Ruby / Rails
+back-end/.bundle/
+back-end/log/*
+back-end/tmp/*
+back-end/storage/*.sqlite3
+back-end/storage/*.sqlite3-*
+back-end/.env
+
+# Node / React
+front-end/node_modules/
+front-end/dist/
+front-end/.env
+front-end/.env.local
+
+# Sistema
+.DS_Store
+Thumbs.db
+
