@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  date: 2026-08-29
+  grade: 9.99
+  subject: one
+
+two:
+  name: MyString
+  date: 2026-08-29
+  grade: 9.99
+  subject: two

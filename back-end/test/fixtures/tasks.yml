@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  status: MyString
+  due_date: 2026-08-29
+  subject: one
+
+two:
+  title: MyString
+  description: MyText
+  status: MyString
+  due_date: 2026-08-29
+  subject: two
