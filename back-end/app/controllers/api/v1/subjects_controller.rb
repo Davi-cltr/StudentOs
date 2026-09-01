@@ -24,7 +24,7 @@ class Api::V1::SubjectsController < ApplicationController
   def update 
     subject = Subject.find(params[:id])
 
-    if subject.save
+    if subject.update(subject_params)
       render json: subject
     else 
       render json: { errors: subject.errors.full_messages }, status: :unprocessable_entity
