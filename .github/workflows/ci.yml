@@ -24,10 +24,8 @@ jobs:
           bundler-cache: true
 
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: |
-          bin/brakeman --no-pager -q -f tabs > brakeman.txt || status=$?
-          while IFS= read -r line; do echo "::error::$line"; done < brakeman.txt
-          exit ${status:-0}
+        # Sem --ensure-latest (usado por bin/brakeman): ele falha sempre que sai uma versão nova da ferramenta.
+        run: bundle exec brakeman --no-pager
 
   lint:
     runs-on: ubuntu-latest
