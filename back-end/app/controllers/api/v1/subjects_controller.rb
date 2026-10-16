@@ -1,14 +1,12 @@
 class Api::V1::SubjectsController < ApplicationController
-  def index
-    subjects = Subject.all
+  before_action :set_subject, only: %i[ show update destroy ]
 
-    render json: subjects
+  def index
+    render json: Subject.order(:name)
   end
 
-  def show 
-    subject = Subject.find(params[:id])
-
-    render json: subject
+  def show
+    render json: @subject
   end
 
   def create
@@ -21,27 +19,27 @@ class Api::V1::SubjectsController < ApplicationController
     end
   end
 
-  def update 
-    subject = Subject.find(params[:id])
-
-    if subject.save
-      render json: subject
-    else 
-      render json: { errors: subject.errors.full_messages }, status: :unprocessable_entity
+  def update
+    if @subject.update(subject_params)
+      render json: @subject
+    else
+      render json: { errors: @subject.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
-  def destroy 
-    subject = Subject.find(params[:id])
-
-    subject.destroy
+  def destroy
+    @subject.destroy
 
     head :no_content
   end
 
   private
 
-  def subject_params
-    params.require(:subject).permit(:name, :teacher)
-  end
+    def set_subject
+      @subject = Subject.find(params[:id])
+    end
+
+    def subject_params
+      params.require(:subject).permit(:name, :teacher)
+    end
 end

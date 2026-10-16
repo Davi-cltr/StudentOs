@@ -1,15 +1,13 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
 one:
-  title: MyString
-  description: MyText
-  status: MyString
-  due_date: 2026-08-29
+  title: Lista de exercícios 1
+  description: Resolver os exercícios do capítulo 3
+  status: pending
+  due_date: 2026-11-10
   subject: one
 
 two:
-  title: MyString
-  description: MyText
-  status: MyString
-  due_date: 2026-08-29
+  title: Resumo da Revolução Francesa
+  description: Escrever um resumo de uma página
+  status: completed
+  due_date: 2026-11-05
   subject: two
