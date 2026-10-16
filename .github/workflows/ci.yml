@@ -19,7 +19,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: back-end/.ruby-version
+          ruby-version: .ruby-version
           working-directory: back-end
           bundler-cache: true
 
@@ -35,7 +35,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: back-end/.ruby-version
+          ruby-version: .ruby-version
           working-directory: back-end
           bundler-cache: true
 
@@ -45,16 +45,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3
-
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: back-end/.ruby-version
+          ruby-version: .ruby-version
           working-directory: back-end
           bundler-cache: true
 
