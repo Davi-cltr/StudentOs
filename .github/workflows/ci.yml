@@ -19,12 +19,14 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: back-end/.ruby-version
+          ruby-version: .ruby-version
           working-directory: back-end
           bundler-cache: true
 
       - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
+        # Sem --ensure-latest (usado por bin/brakeman): ele falha sempre que sai uma versão nova da ferramenta.
+        # TODO: o Rails 7.2 saiu de suporte em 2026-08-09. Depois de atualizar o Rails, remover "-x EOLRails".
+        run: bundle exec brakeman --no-pager -x EOLRails
 
   lint:
     runs-on: ubuntu-latest
@@ -35,7 +37,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: back-end/.ruby-version
+          ruby-version: .ruby-version
           working-directory: back-end
           bundler-cache: true
 
@@ -45,16 +47,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3
-
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: back-end/.ruby-version
+          ruby-version: .ruby-version
           working-directory: back-end
           bundler-cache: true
 
