@@ -11,3 +11,10 @@ two:
   status: completed
   due_date: 2026-11-05
   subject: two
+
+other:
+  title: Tarefa do Bruno
+  description: Não deve aparecer para a Ana
+  status: pending
+  due_date: 2026-11-12
+  subject: other

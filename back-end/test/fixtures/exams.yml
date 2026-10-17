@@ -9,3 +9,9 @@ two:
   date: 2026-10-01
   grade: 8.5
   subject: two
+
+other:
+  name: Prova do Bruno
+  date: 2026-11-22
+  grade:
+  subject: other

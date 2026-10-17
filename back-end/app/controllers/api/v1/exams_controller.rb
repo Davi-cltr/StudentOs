@@ -4,7 +4,7 @@ class Api::V1::ExamsController < ApplicationController
   # GET /api/v1/exams
   # Filtro opcional: ?subject_id=1
   def index
-    exams = Exam.order(:date)
+    exams = current_user.exams.order(:date)
     exams = exams.where(subject_id: params[:subject_id]) if params[:subject_id].present?
 
     render json: exams
@@ -15,7 +15,7 @@ class Api::V1::ExamsController < ApplicationController
   end
 
   def create
-    exam = Exam.new(exam_params)
+    exam = Exam.new(with_owned_subject(exam_params))
 
     if exam.save
       render json: exam, status: :created
@@ -25,7 +25,7 @@ class Api::V1::ExamsController < ApplicationController
   end
 
   def update
-    if @exam.update(exam_params)
+    if @exam.update(with_owned_subject(exam_params))
       render json: @exam
     else
       render json: { errors: @exam.errors.full_messages }, status: :unprocessable_entity
@@ -41,7 +41,7 @@ class Api::V1::ExamsController < ApplicationController
   private
 
     def set_exam
-      @exam = Exam.find(params[:id])
+      @exam = current_user.exams.find(params[:id])
     end
 
     def exam_params

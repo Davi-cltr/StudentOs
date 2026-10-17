@@ -1,7 +1,15 @@
+# Ana tem duas matérias; Bruno tem uma (usada nos testes de isolamento).
 one:
   name: Matemática
   teacher: Erica
+  user: ana
 
 two:
   name: História
   teacher: Carlos
+  user: ana
+
+other:
+  name: Física
+  teacher: Marcos
+  user: bruno
