@@ -1,16 +1,56 @@
-# React + Vite
+# StudentOS — front-end
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Interface web do StudentOS, feita com React e Vite. Ela consome a API Rails da pasta `back-end/`.
 
-Currently, two official plugins are available:
+## Telas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Tarefas:** lista dividida em "A fazer" e "Concluídas". O checkbox conclui ou reabre a tarefa; tarefas atrasadas ficam destacadas.
+- **Provas:** separadas em "Próximas" e "Já realizadas", com a nota quando existe.
+- **Anotações:** lista por matéria; clique no título para ler o texto.
+- **Matérias:** cadastro de matérias e professores. Excluir uma matéria exclui também suas tarefas, provas e anotações.
 
-## React Compiler
+Tarefas, provas e anotações podem ser filtradas por matéria.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Como rodar
 
-## Expanding the Oxlint configuration
+Você precisa do Node.js e do backend rodando.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```bash
+# 1. Backend (em um terminal)
+cd back-end
+bin/rails db:setup
+bin/rails server        # http://localhost:3000
+
+# 2. Frontend (em outro terminal)
+cd front-end
+npm install
+npm run dev             # http://localhost:5173
+```
+
+Em desenvolvimento, o Vite encaminha as chamadas de `/api` para `http://localhost:3000`,
+então não é preciso configurar CORS. Para apontar para outro endereço:
+
+```bash
+API_TARGET=http://localhost:4000 npm run dev
+```
+
+## Scripts
+
+| Comando           | O que faz                                |
+| ----------------- | ---------------------------------------- |
+| `npm run dev`     | Servidor de desenvolvimento              |
+| `npm run build`   | Gera a versão de produção em `dist/`     |
+| `npm run preview` | Serve a versão de produção localmente    |
+| `npm run lint`    | Verifica o código com o Oxlint           |
+
+## Estrutura
+
+```
+src/
+  api.js           cliente da API (fetch + tratamento de erros)
+  useResource.js   hook que carrega e altera uma lista da API
+  pages/           uma página por seção
+  components/      diálogos (Modal) e peças compartilhadas (ui)
+  lib/format.js    datas e notas em português
+  index.css        estilos e cores (tema claro e escuro)
+```
