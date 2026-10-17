@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_08_30_022442) do
+ActiveRecord::Schema[7.2].define(version: 2026_10_16_230003) do
+  create_table "auth_tokens", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "token_digest", null: false
+    t.datetime "expires_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["token_digest"], name: "index_auth_tokens_on_token_digest", unique: true
+    t.index ["user_id"], name: "index_auth_tokens_on_user_id"
+  end
+
   create_table "exams", force: :cascade do |t|
     t.string "name"
     t.date "date"
@@ -35,6 +45,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_30_022442) do
     t.string "teacher"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_subjects_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -48,7 +60,18 @@ ActiveRecord::Schema[7.2].define(version: 2026_08_30_022442) do
     t.index ["subject_id"], name: "index_tasks_on_subject_id"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "password_digest", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  add_foreign_key "auth_tokens", "users"
   add_foreign_key "exams", "subjects"
   add_foreign_key "notes", "subjects"
+  add_foreign_key "subjects", "users"
   add_foreign_key "tasks", "subjects"
 end

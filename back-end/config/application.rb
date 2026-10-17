@@ -28,5 +28,9 @@ module BackEnd
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Mensagens de validação em português (config/locales/pt-BR.yml); o inglês é o reserva.
+    config.i18n.default_locale = :"pt-BR"
+    config.i18n.fallbacks = [ :en ]
   end
 end

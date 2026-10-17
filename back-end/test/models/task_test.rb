@@ -13,7 +13,7 @@ class TaskTest < ActiveSupport::TestCase
     task = Task.new(subject: subjects(:one))
 
     assert_not task.valid?
-    assert_includes task.errors[:title], "can't be blank"
+    assert_includes task.errors[:title], I18n.t("errors.messages.blank")
   end
 
   test "is invalid with an unknown status" do

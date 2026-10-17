@@ -9,14 +9,14 @@ class NoteTest < ActiveSupport::TestCase
     note = Note.new(content: "Texto", subject: subjects(:one))
 
     assert_not note.valid?
-    assert_includes note.errors[:title], "can't be blank"
+    assert_includes note.errors[:title], I18n.t("errors.messages.blank")
   end
 
   test "is invalid without content" do
     note = Note.new(title: "Resumo", subject: subjects(:one))
 
     assert_not note.valid?
-    assert_includes note.errors[:content], "can't be blank"
+    assert_includes note.errors[:content], I18n.t("errors.messages.blank")
   end
 
   test "is invalid without subject" do

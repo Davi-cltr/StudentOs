@@ -13,3 +13,11 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
   end
 end
+
+class ActionDispatch::IntegrationTest
+  # Cabeçalho de login para o usuário informado: get url, headers: auth_headers(users(:ana))
+  def auth_headers(user)
+    _record, token = AuthToken.issue_for(user)
+    { "Authorization" => "Bearer #{token}" }
+  end
+end

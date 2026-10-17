@@ -1,0 +1,10 @@
+# Senha de todos os usuários de teste: senha1234
+ana:
+  name: Ana Souza
+  email: ana@example.com
+  password_digest: <%= BCrypt::Password.create("senha1234", cost: BCrypt::Engine::MIN_COST) %>
+
+bruno:
+  name: Bruno Lima
+  email: bruno@example.com
+  password_digest: <%= BCrypt::Password.create("senha1234", cost: BCrypt::Engine::MIN_COST) %>

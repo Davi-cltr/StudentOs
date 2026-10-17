@@ -7,3 +7,8 @@ two:
   title: Causas da Revolução Francesa
   content: Crise econômica, desigualdade social e ideias iluministas.
   subject: two
+
+other:
+  title: Anotação do Bruno
+  content: Não deve aparecer para a Ana
+  subject: other
