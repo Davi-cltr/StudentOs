@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import ExamsPage from './pages/ExamsPage'
+import HomePage from './pages/HomePage'
 import NotesPage from './pages/NotesPage'
 import SubjectsPage from './pages/SubjectsPage'
 import TasksPage from './pages/TasksPage'
 import { useResource } from './useResource'
 
 const SECTIONS = [
+  { id: 'inicio', label: 'Início', Page: HomePage },
   { id: 'tarefas', label: 'Tarefas', Page: TasksPage },
   { id: 'provas', label: 'Provas', Page: ExamsPage },
   { id: 'anotacoes', label: 'Anotações', Page: NotesPage },
@@ -37,7 +39,7 @@ export default function App() {
   return (
     <div className="shell">
       <header className="topbar">
-        <a className="wordmark" href="#tarefas">
+        <a className="wordmark" href="#inicio">
           StudentOS
         </a>
         <nav aria-label="Seções">
