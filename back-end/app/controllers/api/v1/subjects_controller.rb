@@ -2,7 +2,7 @@ class Api::V1::SubjectsController < ApplicationController
   before_action :set_subject, only: %i[ show update destroy ]
 
   def index
-    render json: Subject.order(:name)
+    render json: current_user.subjects.order(:name)
   end
 
   def show
@@ -10,7 +10,7 @@ class Api::V1::SubjectsController < ApplicationController
   end
 
   def create
-    subject = Subject.new(subject_params)
+    subject = current_user.subjects.new(subject_params)
 
     if subject.save
       render json: subject, status: :created
@@ -36,7 +36,7 @@ class Api::V1::SubjectsController < ApplicationController
   private
 
     def set_subject
-      @subject = Subject.find(params[:id])
+      @subject = current_user.subjects.find(params[:id])
     end
 
     def subject_params

@@ -1,63 +1,37 @@
-import { useEffect, useState } from 'react'
-import ExamsPage from './pages/ExamsPage'
-import HomePage from './pages/HomePage'
-import NotesPage from './pages/NotesPage'
-import SubjectsPage from './pages/SubjectsPage'
-import TasksPage from './pages/TasksPage'
-import { useResource } from './useResource'
+import { AuthProvider } from './auth/AuthProvider'
+import { useAuth } from './auth/context'
+import { LoadError, Loading } from './components/ui'
+import LoginPage from './pages/LoginPage'
+import Workspace from './Workspace'
 
-const SECTIONS = [
-  { id: 'inicio', label: 'Início', Page: HomePage },
-  { id: 'tarefas', label: 'Tarefas', Page: TasksPage },
-  { id: 'provas', label: 'Provas', Page: ExamsPage },
-  { id: 'anotacoes', label: 'Anotações', Page: NotesPage },
-  { id: 'materias', label: 'Matérias', Page: SubjectsPage },
-]
+function Gate() {
+  const { status, retry } = useAuth()
 
-function sectionFromHash() {
-  const id = window.location.hash.replace('#', '')
-  return SECTIONS.some((section) => section.id === id) ? id : SECTIONS[0].id
-}
-
-export default function App() {
-  const [current, setCurrent] = useState(sectionFromHash)
-  // As matérias são usadas por todas as páginas (formulários e filtros).
-  const subjects = useResource('subjects', 'subject')
-
-  useEffect(() => {
-    const onHashChange = () => setCurrent(sectionFromHash())
-    window.addEventListener('hashchange', onHashChange)
-    return () => window.removeEventListener('hashchange', onHashChange)
-  }, [])
-
-  const goTo = (id) => {
-    window.location.hash = id
-  }
-
-  const { Page } = SECTIONS.find((section) => section.id === current)
+  if (status === 'authenticated') return <Workspace />
+  if (status === 'anonymous') return <LoginPage />
 
   return (
     <div className="shell">
-      <header className="topbar">
-        <a className="wordmark" href="#inicio">
-          StudentOS
-        </a>
-        <nav aria-label="Seções">
-          {SECTIONS.map((section) => (
-            <a
-              key={section.id}
-              href={`#${section.id}`}
-              aria-current={section.id === current ? 'page' : undefined}
-            >
-              {section.label}
-            </a>
-          ))}
-        </nav>
-      </header>
-
       <main className="page">
-        <Page subjects={subjects} goTo={goTo} />
+        {status === 'unreachable' ? (
+          <LoadError
+            error={{ messages: ['Não foi possível conectar ao servidor. Confira se o backend está rodando.'] }}
+            onRetry={retry}
+          />
+        ) : (
+          <Loading />
+        )}
       </main>
     </div>
+  )
+}
+
+// Só mostra o app para quem está logado. Ao sair, o Workspace é desmontado e todos os
+// dados carregados somem da memória, então nada de uma conta aparece na outra.
+export default function App() {
+  return (
+    <AuthProvider>
+      <Gate />
+    </AuthProvider>
   )
 }

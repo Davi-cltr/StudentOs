@@ -1,3 +1,4 @@
+import { useAuth } from '../auth/context'
 import { EmptyState, LoadError, Loading, PageHeader } from '../components/ui'
 import {
   buildAgenda,
@@ -32,6 +33,7 @@ function dayHeading(iso, today) {
 }
 
 export default function HomePage({ subjects, goTo }) {
+  const { user } = useAuth()
   const tasks = useResource('tasks', 'task')
   const exams = useResource('exams', 'exam')
 
@@ -60,7 +62,9 @@ export default function HomePage({ subjects, goTo }) {
   return (
     <section>
       <PageHeader title="Início" />
-      <p className="today">{todayLabel}</p>
+      <p className="today">
+        Olá, {user.name.split(' ')[0]}. {todayLabel}
+      </p>
 
       {loading && <Loading />}
       {error && <LoadError error={error} onRetry={retry} />}
