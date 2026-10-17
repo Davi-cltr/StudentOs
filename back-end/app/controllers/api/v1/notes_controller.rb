@@ -4,7 +4,7 @@ class Api::V1::NotesController < ApplicationController
   # GET /api/v1/notes
   # Filtro opcional: ?subject_id=1
   def index
-    notes = Note.order(created_at: :desc)
+    notes = current_user.notes.order(created_at: :desc)
     notes = notes.where(subject_id: params[:subject_id]) if params[:subject_id].present?
 
     render json: notes
@@ -15,7 +15,7 @@ class Api::V1::NotesController < ApplicationController
   end
 
   def create
-    note = Note.new(note_params)
+    note = Note.new(with_owned_subject(note_params))
 
     if note.save
       render json: note, status: :created
@@ -25,7 +25,7 @@ class Api::V1::NotesController < ApplicationController
   end
 
   def update
-    if @note.update(note_params)
+    if @note.update(with_owned_subject(note_params))
       render json: @note
     else
       render json: { errors: @note.errors.full_messages }, status: :unprocessable_entity
@@ -41,7 +41,7 @@ class Api::V1::NotesController < ApplicationController
   private
 
     def set_note
-      @note = Note.find(params[:id])
+      @note = current_user.notes.find(params[:id])
     end
 
     def note_params

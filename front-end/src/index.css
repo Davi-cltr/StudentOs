@@ -707,3 +707,46 @@ textarea {
     grid-column: 1 / -1;
   }
 }
+
+/* ---------- Conta e login ---------- */
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: auto;
+  color: var(--ink-soft);
+}
+
+.account-name {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.auth {
+  max-width: 26rem;
+}
+
+.auth h1 {
+  font-size: clamp(1.9rem, 5vw, 2.5rem);
+  letter-spacing: -0.02em;
+}
+
+.auth-lead {
+  margin: 0.5rem 0 1.5rem;
+  color: var(--ink-soft);
+}
+
+.auth-submit {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.auth-switch {
+  margin-top: 1.5rem;
+}
+
+.hint {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}

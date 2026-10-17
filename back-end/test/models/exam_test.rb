@@ -13,14 +13,14 @@ class ExamTest < ActiveSupport::TestCase
     exam = Exam.new(date: Date.new(2026, 11, 20), subject: subjects(:one))
 
     assert_not exam.valid?
-    assert_includes exam.errors[:name], "can't be blank"
+    assert_includes exam.errors[:name], I18n.t("errors.messages.blank")
   end
 
   test "is invalid without date" do
     exam = Exam.new(name: "Prova 1", subject: subjects(:one))
 
     assert_not exam.valid?
-    assert_includes exam.errors[:date], "can't be blank"
+    assert_includes exam.errors[:date], I18n.t("errors.messages.blank")
   end
 
   test "grade must be between 0 and 10" do

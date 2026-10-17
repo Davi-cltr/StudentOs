@@ -4,7 +4,7 @@ class Api::V1::TasksController < ApplicationController
   # GET /api/v1/tasks
   # Filtros opcionais: ?subject_id=1 e ?status=pending
   def index
-    tasks = Task.order(:due_date)
+    tasks = current_user.tasks.order(:due_date)
     tasks = tasks.where(subject_id: params[:subject_id]) if params[:subject_id].present?
     tasks = tasks.where(status: params[:status]) if params[:status].present?
 
@@ -16,7 +16,7 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def create
-    task = Task.new(task_params)
+    task = Task.new(with_owned_subject(task_params))
 
     if task.save
       render json: task, status: :created
@@ -26,7 +26,7 @@ class Api::V1::TasksController < ApplicationController
   end
 
   def update
-    if @task.update(task_params)
+    if @task.update(with_owned_subject(task_params))
       render json: @task
     else
       render json: { errors: @task.errors.full_messages }, status: :unprocessable_entity
@@ -42,7 +42,7 @@ class Api::V1::TasksController < ApplicationController
   private
 
     def set_task
-      @task = Task.find(params[:id])
+      @task = current_user.tasks.find(params[:id])
     end
 
     def task_params

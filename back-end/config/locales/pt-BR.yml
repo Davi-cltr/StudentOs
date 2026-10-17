@@ -1,0 +1,51 @@
+pt-BR:
+  activerecord:
+    models:
+      user: Usuário
+      subject: Matéria
+      task: Tarefa
+      exam: Prova
+      note: Anotação
+    attributes:
+      user:
+        name: Nome
+        email: E-mail
+        password: Senha
+        password_confirmation: Confirmação da senha
+      subject:
+        name: Nome
+        teacher: Professor(a)
+        user: Usuário
+      task:
+        title: Título
+        description: Descrição
+        status: Situação
+        due_date: Data de entrega
+        subject: Matéria
+      exam:
+        name: Nome
+        date: Data
+        grade: Nota
+        subject: Matéria
+      note:
+        title: Título
+        content: Anotação
+        subject: Matéria
+  errors:
+    format: "%{attribute} %{message}"
+    messages:
+      blank: não pode ficar em branco
+      taken: já está em uso
+      invalid: não é válido
+      inclusion: não está na lista de opções
+      required: precisa existir
+      confirmation: não confere com %{attribute}
+      not_a_number: não é um número
+      greater_than_or_equal_to: deve ser maior ou igual a %{count}
+      less_than_or_equal_to: deve ser menor ou igual a %{count}
+      too_short:
+        one: "é muito curta (mínimo: 1 caractere)"
+        other: "é muito curta (mínimo: %{count} caracteres)"
+      too_long:
+        one: "é muito longa (máximo: 1 caractere)"
+        other: "é muito longa (máximo: %{count} caracteres)"
