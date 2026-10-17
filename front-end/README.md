@@ -4,6 +4,7 @@ Interface web do StudentOS, feita com React e Vite. Ela consome a API Rails da p
 
 ## Telas
 
+- **Entrar / Criar conta:** cada pessoa tem a sua conta e só vê os próprios dados. A sessão fica guardada no navegador; o botão **Sair** (no topo) encerra a sessão. Se o login expirar, o app volta para a tela de entrada com um aviso.
 - **Início:** resumo do dia (tarefas atrasadas, entregas da semana, próxima prova), agenda dos próximos 14 dias com tarefas e provas, e a média das notas por matéria.
 - **Tarefas:** lista dividida em "A fazer" e "Concluídas". O checkbox conclui ou reabre a tarefa; tarefas atrasadas ficam destacadas.
 - **Provas:** separadas em "Próximas" e "Já realizadas", com a nota quando existe.
@@ -19,6 +20,7 @@ Você precisa do Node.js e do backend rodando.
 ```bash
 # 1. Backend (em um terminal)
 cd back-end
+bundle install
 bin/rails db:setup
 bin/rails server        # http://localhost:3000
 
@@ -26,6 +28,14 @@ bin/rails server        # http://localhost:3000
 cd front-end
 npm install
 npm run dev             # http://localhost:5173
+```
+
+Abra o frontend e use **Criar conta** na primeira vez. Se você já tinha matérias cadastradas
+antes do login existir, associe-as à sua conta (troque pelo e-mail que você cadastrou):
+
+```bash
+cd back-end
+bin/rails "studentos:claim_orphans[seu@email.com]"
 ```
 
 Em desenvolvimento, o Vite encaminha as chamadas de `/api` para `http://localhost:3000`,
@@ -49,7 +59,9 @@ API_TARGET=http://localhost:4000 npm run dev
 
 ```
 src/
-  api.js           cliente da API (fetch + tratamento de erros)
+  api.js           cliente da API (fetch, token de login e tratamento de erros)
+  auth/            contexto de login (AuthProvider, useAuth)
+  Workspace.jsx    o app depois do login (navegação e páginas)
   useResource.js   hook que carrega e altera uma lista da API
   pages/           uma página por seção
   components/      diálogos (Modal) e peças compartilhadas (ui)
